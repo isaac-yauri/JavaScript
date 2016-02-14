@@ -1,0 +1,68 @@
+function processData(input) {
+    input = input.split(/[\s,]+/);
+    var m = parseInt(input[0]);
+    var n = parseInt(input[1]);
+    input = input.splice(2, (n * m) + 2);
+    
+    var array = [];
+    var len = input.length;
+    var max = 0;
+    var vector = [];
+    var cambios = [ -n-1, -1 , n-1, -n, n, 1-n, 1, n+1];
+
+    for (var i = 0; i < len; i++) {
+        array[i] = Number(input[i]);
+    }    
+
+    for (var i = 0; i < len; i++) {
+        if (array[i] == 1) {
+            array[i] = 2;
+            vector.push(i);
+            var p = 0;
+            var k = 0;
+            var bool = true;
+            while (bool) {
+                k = vector[p];
+                console.log(k);
+                for (var j = 0; j < 8; j++) {
+                    var posicion = k + cambios[j];
+                    if (posicion >= 0 & posicion <= len & array[posicion] == 1) {
+                        if ((posicion % n) == 0 & j > 2) {
+                            array[posicion] = 2;
+                            vector.push(posicion);                            
+                        } else if (((posicion % n) == (n - 1)) & j < 5) {
+                            array[posicion] = 2;
+                            vector.push(posicion);                            
+                        } else if ((posicion % n) != 0 & ((posicion % n) != (n - 1))) {
+                            array[posicion] = 2;
+                            vector.push(posicion);                           
+                        }
+                    }
+                }
+                if (p < vector.length) {
+                    p++;
+                } else {
+                    bool = false;
+                }
+            }
+            if (vector.length > max) { 
+                max = vector.length;
+            }
+
+        }
+        vector = [];
+
+    }
+    console.log(max);
+} 
+
+process.stdin.resume();
+process.stdin.setEncoding("ascii");
+_input = "";
+process.stdin.on("data", function (input) {
+    _input += input;
+});
+
+process.stdin.on("end", function () {
+   processData(_input);
+});
