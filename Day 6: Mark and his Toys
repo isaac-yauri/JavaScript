@@ -1,0 +1,30 @@
+function processData(input) {
+    input = input.split(/[\s,]+/);
+    var N = input[0];
+    var K = input[1];
+    input = input.splice(2, N + 2);
+    var array = [];
+    for (var i = 0; i < N; i++) {
+        array[i] = Number(input[i]);
+    }
+    array.sort(function(a, b){return a-b});
+    var count = 0;
+    for (var i = 0; i < N; i++) {
+        if (K - array[i] >= 0) {
+            K -= array[i];
+            count++;
+        }
+    }
+    console.log(count);
+} 
+
+process.stdin.resume();
+process.stdin.setEncoding("ascii");
+_input = "";
+process.stdin.on("data", function (input) {
+    _input += input;
+});
+
+process.stdin.on("end", function () {
+   processData(_input);
+});
