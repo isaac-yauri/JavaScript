@@ -1,0 +1,27 @@
+function processData(input) {
+    input = input.split(/[\s,]+/);
+    var T = parseInt(input[0]);
+    input = input.splice(1, T);
+    for (var i = 0; i < T; i++) {
+        var word = input[i].split("");
+        var len = word.length;
+        var mitad = parseInt(word.length / 2);
+        var total = 0;
+        for (var j = 0; j < mitad; j++) {
+            var dif = word[j].charCodeAt(0) - word[len - j - 1].charCodeAt(0); 
+            total += Math.abs(dif);
+        }
+        console.log(total);
+    }
+} 
+
+process.stdin.resume();
+process.stdin.setEncoding("ascii");
+_input = "";
+process.stdin.on("data", function (input) {
+    _input += input;
+});
+
+process.stdin.on("end", function () {
+   processData(_input);
+});
